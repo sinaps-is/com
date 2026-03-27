@@ -1,0 +1,37 @@
+# dependencies
+node_modules/
+
+# build output and generated types
+dist/
+.astro/
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# diagnostic reports and logs
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+npm-debug.log*
+*.log
+
+# cache
+.npm
+.cache
+.temp
+.vite/
+.pnpm-store
+
+# coverage
+coverage/
+*.lcov
+
+# editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# system
+.DS_Store
+Thumbs.db
