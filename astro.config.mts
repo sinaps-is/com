@@ -1,8 +1,10 @@
 import { defineConfig as config } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 
+import { project } from './src/consts';
+
 export default config ({
-  site: 'https://sinaps.is',
+  site: project.url,
   trailingSlash: 'never',
   output: 'server',
 
