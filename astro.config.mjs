@@ -1,4 +1,5 @@
 import { defineConfig as config } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 
 export default config ({
   site: 'https://sinaps.is',
@@ -9,4 +10,11 @@ export default config ({
   devToolbar: {
     enabled: false
   },
+
+  // Cloudflare adapter configuration
+  adapter: cloudflare ({
+    imageService: { build: 'compile', runtime: 'cloudflare-binding' },
+    sessionKVBindingName: 'SESSION',
+    imagesBindingName: 'IMAGES',
+  }),
 });
