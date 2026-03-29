@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+import { brand, project } from '@/consts';
+
+interface Props extends HTMLAttributes <'html'> {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  className?: string;
+};
+
+const {
+  title = brand.name,
+  description = brand.description,
+  canonical = new URL (Astro.url.pathname, project.url),
+  className = '',
+} = Astro.props;
+---
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>{title}</title>
+    <meta name='description' content={description}>
+    <link rel='canonical' href={canonical}>
+    <slot name='head'></slot>
+  </head>
+  <body class:list={[className]}>
+    <slot></slot>
+  </body>
+</html>
