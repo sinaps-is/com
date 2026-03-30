@@ -1,30 +1,42 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-import { brand, project } from '@/consts';
+import { type Robots, type LangCode, resolveTitle, resolveDescription, resolveRobots, resolveLang } from '@/core/seo';
+import { absolute } from '@/core/utils/url';
+import { brand, i18n } from '@/consts';
 
 interface Props extends HTMLAttributes <'html'> {
   title?: string;
   description?: string;
   canonical?: string;
   className?: string;
+  robots?: Robots;
+  code?: LangCode;
 };
 
 const {
   title = brand.name,
   description = brand.description,
-  canonical = new URL (Astro.url.pathname, project.url),
+  canonical = Astro.url.pathname,
   className = '',
+  robots = 'all',
+  code = i18n.default,
 } = Astro.props;
+
+const resolvedTitle = resolveTitle (title);
+const resolvedDescription = resolveDescription (description);
+const resolvedRobots = resolveRobots (robots);
+const { lang, dir } = resolveLang (code);
 ---
 <!doctype html>
-<html>
+<html {lang} {dir}>
   <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>{title}</title>
-    <meta name='description' content={description}>
-    <link rel='canonical' href={canonical}>
+    <title>{resolvedTitle}</title>
+    <meta name='description' content={resolvedDescription}>
+    <meta name='robots' content={resolvedRobots}>
+    <link rel='canonical' href={absolute (canonical)}>
     <slot name='head'></slot>
   </head>
   <body class:list={[className]}>
